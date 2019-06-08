@@ -1,0 +1,89 @@
+//array of quote objects
+const quotables = 
+      [{quote: "Forget it, Jake. It's Chinatown. Also, forget I just said that.", author: "Chinatown"},
+      {quote: "Hey kid, I'm over here looking at you.", author: "Casablanca"},
+      {quote: "It wasn't the airplanes. It was Beauty killed the Beast. Don't get me wrong, the airplanes helped.", author: "King Kong"},
+      {quote: "That's not a knife. That's a knife! OK, they're both knives.", author: "Crocodile Dundee"},
+        {quote: "I love the smell of potpourri in the morning.", author: "Apocalypse Now"},
+      {quote: "They're here. The ghosts, I mean.", author: "Poltergeist"},
+      {quote: "All these moments will be lost, like tears in the rain. And let me tell you, once they get into the rain, it's really, really hard to find them.", author: "Bladerunner"},
+       {quote: "Replay it, Sam.", author: "Casablanca"},
+       {quote: "Let's roll.. down the windows, and suck the terrorists out.", author: "United 93"},
+       {quote: "Houston, our problem is that an oxygen tank has exploded.", author: "Apollo 13"},
+        {quote: "My sled.", author: "Citizen Kane"},
+       {quote: "You're gonna need a bigger boat. Much, much bigger. At least two times as big, by my estimate.", author: "Jaws"},
+      {quote: "I'm gonna make him an offer he can't refuse. He won't be able to refuse it because it's so good. Oh god, I can't get over how good this offer is.", author: "The Godfather"},
+      {quote: "After all, tomorrow is another day! The day after tomorrow is also a day. There are many days, is my point.", author: "Gone With the Wind"}];
+
+//generates random number
+const RandomNumbers = (max) => {
+  return Math.floor(Math.random() * Math.floor(max));
+};
+
+/*finds length of quotes object so it generates a number that corresponds to the index of a quote,
+then calls RandonNumbers to generate that number*/
+const max = quotables.length;
+const num = RandomNumbers(max);
+
+//Application component with default state set to a random quote
+class Application extends React.Component {
+  constructor(props) {
+    super(props); // makes this refer to this component
+    this.state = {quote: quotables[num].quote,
+      author: quotables[num].author};
+
+//binds button to this method    
+this.handleClick = this.handleClick.bind(this);   
+  }
+  
+/*button method, which sets state to a different quote, pulled randomly from 
+the quotes object*/
+handleClick() {
+const num = RandomNumbers(max);
+    return this.setState({
+      quote: quotables[num].quote,
+      author: quotables[num].author
+      });
+  
+};
+      
+  render() {
+           
+ const twitter = "https://twitter.com/intent/tweet?text=" + this.state.quote;  
+    
+    return (
+      <div>
+      <p>CLASSIC MOVIE QUOTES</p> 
+      
+        <div id = "quote-box">  
+        
+          <div id = "quotation-box">
+          
+          <div id = "text">  
+          <h1>"{this.state.quote}"</h1>
+          </div>  
+        
+          <div id = "author">
+           <h2>{this.state.author}</h2>
+          </div> 
+            
+          <div id = "flexy">  
+            
+          <div id = "new-quote">
+          <button onClick={this.handleClick}>New Quote</button>
+          </div>
+            
+          <a id = "tweet-quote" target = "_blank" href = {twitter}> Tweet This</a>
+            </div>
+          </div>
+        </div> 
+    
+      </div>
+    )
+  }
+}
+
+/*
+ * Render the above component into the div#app
+ */
+React.render(<Application />, document.getElementById('app'));
